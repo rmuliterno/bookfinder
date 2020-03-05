@@ -1,40 +1,73 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+import 'semantic-ui-css/semantic.min.css'
+
+import { Button, Input, Icon, Form } from 'semantic-ui-react'
+
 import './App.css';
 
 import api from './services/api';
 
 function App() {
+	const [loading, setLoading] = useState(false);
+	const [pesquisa, setPesquisa] = useState('');
+	
 
-  async function handleClick() {
-    const response = await api.get('/volumes?q=harry+potter');
+	async function handleSubmit(event) {
+		setLoading(true);
 
-    console.log(response.data.items);
-  }
+		const response = await api.get(`/volumes?q=${pesquisa}&orderBy=relevance&printType=books`);
 
+		console.log('Searching for: ', pesquisa);
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+		console.log(response.data.items);
 
-        <button onClick={handleClick}>
-          Clique em mim!
-        </button>
-      </header>
-    </div>
-  );
+		setLoading(false);
+	}
+
+	function handleChangePesquisa(event) {
+		setPesquisa(event.target.value);
+	}
+
+	return (
+		<div className="App">
+			<header className="App-header">
+				<div className="top">
+					<h2 className="title">
+						<Icon className="icone" name='book' />
+						Book Finder
+				</h2>
+				</div>
+
+				<div className="App-body container">
+					<Form onSubmit={handleSubmit}>
+						<div>
+							<Input
+								onChange={handleChangePesquisa}
+								placeholder="Título, Autor..."
+								type="text"
+								fluid
+								size="big"
+								className="pesquisa"
+							/>
+						</div>
+						<Button
+							inverted
+							color='violet'
+							loading={loading}
+							type="submit"
+							size="huge"
+							>
+								Pesquisar!
+							
+						</Button>
+					</Form>
+
+				</div>
+
+			</header>
+
+		</div>
+	);
 }
 
 export default App;
