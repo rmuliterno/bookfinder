@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import api from './services/api';
+
 function App() {
+
+  async function handleClick() {
+    const response = await api.get('/volumes?q=harry+potter');
+
+    console.log(response.data.items);
+  }
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +28,10 @@ function App() {
         >
           Learn React
         </a>
+
+        <button onClick={handleClick}>
+          Clique em mim!
+        </button>
       </header>
     </div>
   );
