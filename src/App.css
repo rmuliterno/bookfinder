@@ -23,9 +23,10 @@ body #root {
 }
 
 .App-body {
-  width: 80%;
+  width: 75%;
   flex-direction: column;
   align-items: center;
+  justify-content: center
 }
 
 .pesquisa {
@@ -42,4 +43,28 @@ body #root {
 
 .title .icone {
   margin-left: 6px;
+}
+
+img {
+  max-height: 200px;
+}
+
+.botao {
+  margin-bottom: 24px;
+}
+
+.cardGroup {
+  justify-content: center;
+}
+
+.cardHeader {
+  font-size: 1.8rem !important;
+}
+
+.cardMeta {
+  font-size: 1.3rem !important;
+}
+
+.cardDesc {
+  font-size: 1rem !important;
 }

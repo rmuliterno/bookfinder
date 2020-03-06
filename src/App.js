@@ -16,7 +16,7 @@ function App() {
 	async function handleSubmit(event) {
 		setLoading(true);
 
-		const response = await api.get(`/volumes?q=${pesquisa}&orderBy=relevance&printType=books`);
+		const response = await api.get(`/volumes?q=${pesquisa}&orderBy=relevance&printType=books&maxResults=12`);
 
 		console.log('Searching for: ', pesquisa);
 
@@ -46,7 +46,7 @@ function App() {
 						<div>
 							<Input
 								onChange={handleChangePesquisa}
-								placeholder="Título, Autor..."
+								placeholder="Title, Author..."
 								type="text"
 								fluid
 								size="big"
@@ -54,31 +54,34 @@ function App() {
 							/>
 						</div>
 						<Button
+							fluid
 							inverted
 							color='violet'
 							loading={loading}
 							type="submit"
 							size="huge"
+							className="botao"
 							>
-								Pesquisar!
+								<Icon name='search' />
+								Search
 							
 						</Button>
 					</Form>
 
-					<Card.Group itemsPerRow={5}>
+					<Card.Group className="cardGroup">
 					{books.map((book, index) => {
         				return (
 							<Card>
 								<Image className="bookCover" src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : '#'} size='mini' wrapped ui={false} />
 								<Card.Content>
-									<Card.Header>{book.volumeInfo.title}</Card.Header>
-									<Card.Meta>Published in {book.volumeInfo.publishedDate}</Card.Meta>
-									<Card.Description>
-										{book.volumeInfo.description}
+									<Card.Header className="cardHeader">{book.volumeInfo.title}</Card.Header>
+									<Card.Meta className="cardMeta">Published in {book.volumeInfo.publishedDate}</Card.Meta>
+									<Card.Description className="cardDesc">
+										{book.searchInfo ? book.searchInfo.textSnippet : 'Description Unavailable'}
 									</Card.Description>
 								</Card.Content>
 								<Card.Content extra>
-									<a href={book.volumeInfo.description}>
+									<a href={book.volumeInfo.previewLink} target="_blank" rel="noopener noreferrer">
 										Read more!
 									</a>
 								</Card.Content>
